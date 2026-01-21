@@ -119,3 +119,10 @@ Full stack:
 - Use the provided types in `src/lib/types.ts` and add more if needed.
 - If you add new endpoints, use `NextResponse` and validate inputs.
 - Aim for clear, maintainable code.
+
+
+## Notes from I Meyerson Submission:
+
+I used LLMs throughout the project. Firstly, I read the assignment spec several times and then had the LLM (chatgpt) read it over, and I asked guiding questions to make sure I understood what was being asked. I used an LLM to help me understand the already given API  endpoint design (for roles) so that I could build a new API endpoint that returned user results. Catastrophe hit and my computer ran out of storage. I used Chatgpt to help me debug whatever was happening with VSCode, which resulted in the loss of all my files for this project. I had to redo the getRoleAction.ts file and the API endpoint file route.ts under app/api/userResults. 
+
+Finally, I had Claude Code help me with some of the UI components given in the pdf that I was not familiar with building. It also helped me debug my navigational bar on the breakout page, specifically syncing the navigation state ("core", "intermediate", "peripheral") with the role selected. 
