@@ -83,12 +83,6 @@ export default function BreakdownPage() {
 
   //description based on alignment and ranking
   function getRoleDescription(role: RoleWithScore) {
-    const alignment = getRoleAlignment(role.id);
-
-    if (role.score === highestScore) return role.top_rank_desc;
-    if (role.score === lowestScore) return role.bottom_rank_desc;
-    if (alignment === "core") return role.high_rank_desc;
-    if (alignment === "peripheral") return role.low_rank_desc;
     return role.role_desc;
   }
 
@@ -100,6 +94,16 @@ export default function BreakdownPage() {
   //get core drive
   function getCoreDrive(role: RoleWithScore){
     return role.core_drive;
+  }
+
+  //get understanding role alignment
+  function getUnderstandingRoleAlignment(role: RoleWithScore){
+    const alignment = getRoleAlignment(role.id);
+    if (role.score === highestScore) return role.top_rank_desc;
+    if (role.score === lowestScore) return role.bottom_rank_desc;
+    if (alignment === "core") return role.high_rank_desc;
+    if (alignment === "peripheral") return role.low_rank_desc;
+    return null;
   }
 
   return (
@@ -208,9 +212,53 @@ export default function BreakdownPage() {
               <h2 className="text-2xl font-semibold">Core Drive</h2>
               <p className="mt-2 text-gray-800">{selectedRole.core_drive}</p>
             </div>
+            
+
+            </section>
+
+            {/* Role Alignment Card */}
+        <section className="rounded-[28px] border border-black/10 bg-white/80 p-8 shadow-[0_30px_60px_-45px_rgba(15,23,42,0.35)] backdrop-blur sm:p-10">
+          <h2 className="text-3xl font-semibold mb-8">Role Alignment</h2>
           
+          {/* Alignment Scale */}
+          <div className="relative mb-12">
+            {/* Labels */}
+            <div className="flex justify-between text-lg text-gray-600 mb-4">
+              <span>Low</span>
+              <span>Neutral</span>
+              <span>High</span>
+            </div>
+            
+            {/* Gradient bar */}
+            <div className="relative h-32 rounded-3xl overflow-visible bg-gradient-to-r from-red-100 via-yellow-100 to-green-200">
+              {/* Neutral divider line */}
+              <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gray-400 -translate-x-1/2" />
+              
+              {/* Score indicator */}
+              <div 
+                className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 transition-all duration-500"
+                style={{ left: `${((selectedRole.score - lowestScore) / (highestScore - lowestScore)) * 100}%` }}
+              >
+                <div className="bg-white rounded-2xl px-6 py-4 shadow-lg border-2 border-gray-800">
+                  <span className="text-4xl font-bold text-gray-900">{selectedRole.score}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Understanding text */}
+          <div>
+            <h3 className="text-2xl font-semibold mb-4">
+              Understanding Your {getRoleAlignment(selectedRole.id) === "core" ? "High" : getRoleAlignment(selectedRole.id) === "peripheral"} Role Alignment
+            </h3>
+            <p className="text-gray-800 text-lg">
+           {getUnderstandingRoleAlignment(selectedRole)}</p>
+
+            
+          </div>
         </section>
-      </main>
-    </div>
-  );
+        </main>
+        </div>
+  );  
+        
 }
